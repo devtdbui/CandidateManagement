@@ -1,9 +1,6 @@
 
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,11 +9,21 @@ import java.util.Scanner;
  */
 /**
  *
- * @author ThinkPro
+ * @author alias
  */
 public class Validate {
 
     Scanner sc = new Scanner(System.in);
+
+    public void menu() {
+        System.out.println("CANDIDATE MANAGEMENT SYSTEM");
+        System.out.println("1.	Experience");
+        System.out.println("2.	Fresher");
+        System.out.println("3.	Internship");
+        System.out.println("4.	Searching");
+        System.out.println("5.	Exit");
+    }
+
     public int getInt(String msg, String err, int min, int max) {
         int a = 0;
         boolean check;
@@ -41,9 +48,10 @@ public class Validate {
         String value;
         do {
             try {
-                System.out.println(msg);
+                System.out.print(msg);
                 value = sc.nextLine();
-                if (value.matches(pattern)) {
+                Pattern p = Pattern.compile(pattern);
+                if (p.matcher(value).find()) {
                     break;
                 }
             } catch (Exception ex) {
@@ -53,16 +61,14 @@ public class Validate {
         return value;
     }
 
-    public void checkYesNo(Options m, int type) {
+    public boolean checkYesNo() {
         String c = getString("Do you want to continue (Y/N)?", "[yYNn]");
         while (true) {
             if (c.equalsIgnoreCase("y")) {
-                m.addCandidate(type);
+                return true;
             } else {
-                m.displayAll();
-                break;
+                return false;
             }
         }
-
     }
 }

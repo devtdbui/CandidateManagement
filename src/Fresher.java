@@ -1,10 +1,17 @@
 
-
 import java.util.List;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-public class Fresher extends Candidate {
-
+/**
+ *
+ * @author alias
+ */
+public class Fresher extends Candidate{
     private int graduationDate;
     private String graduationRank;
     private String education;
@@ -12,10 +19,7 @@ public class Fresher extends Candidate {
     public Fresher() {
     }
 
-    public Fresher(int id, String firsName, String lastName, int birthDate,
-            String address, String phone, String email, int type,
-            int graduationDate, String graduationRank, String education) {
-
+    public Fresher(int graduationDate, String graduationRank, String education, int id, String firsName, String lastName, int birthDate, String address, String phone, String email, int type) {
         super(id, firsName, lastName, birthDate, address, phone, email, type);
         this.graduationDate = graduationDate;
         this.graduationRank = graduationRank;
@@ -45,7 +49,6 @@ public class Fresher extends Candidate {
     public void setEducation(String education) {
         this.education = education;
     }
-
     @Override
     public void create(List<Candidate> list) {
         Validate v = new Validate();
@@ -58,7 +61,6 @@ public class Fresher extends Candidate {
         } while (!rank.equals("Excellence") && !rank.equals("Good") && !rank.equals("Fair") && !rank.equals("Poor"));
         this.graduationRank=rank;
         this.education = v.getString("Enter education: ", "[a-zA-Z ]+");
-        this.type=1;
+        this.setType(1);
     }
-
 }

@@ -6,20 +6,20 @@ import java.util.List;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
  *
- * @author ThinkPro
+ * @author alias
  */
 public class Candidate {
-    
-    protected int id;
-    protected String firsName;
-    protected String lastName;
-    protected int birthDate;
-    protected String address;
-    protected String phone;
-    protected String email;
-    protected int type;
+    private int id;
+    private String firsName;
+    private String lastName;
+    private int birthDate;
+    private String address;
+    private String phone;
+    private String email;
+    private int type;
 
     public Candidate() {
     }
@@ -101,10 +101,9 @@ public class Candidate {
 
     @Override
     public String toString() {
-        return firsName + " " + lastName + " | " + birthDate + " | " + address
-                + " | " + phone + " | " + email + " | " + type;
+        return  firsName+" "+lastName+" | "+address+" | "
+                +phone+" | "+email+" | "+type;
     }
-
     public boolean checkExist(List<Candidate> list, int id) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId() == id) {
@@ -119,20 +118,20 @@ public class Candidate {
         int id;
         do {
             id = v.getInt("Enter ID: ", "Id is a positive integer", 1, Integer.MAX_VALUE);
-            if(checkExist(list, id)){
+            if(checkExist(list, id)==true){
                 break;
             }else{
                 System.out.println("id is exist, please input again");
             }
         } while (true);
         this.id = id;
-        this.firsName = v.getString("Enter First Name: ", "[a-zA-Z ]+");
-        this.lastName = v.getString("Enter Last Name: ", "[a-zA-Z ]+");
+        this.firsName = v.getString("Enter First Name: ", "^[a-zA-Z ]+$");
+        this.lastName = v.getString("Enter Last Name: ", "^[a-zA-Z ]+$");
         this.birthDate = v.getInt("Enter birth date: ", "BirthDate invalid", 1900, 2020);
-        this.address = v.getString("Enter address: ", "[a-zA-Z ]+");
-        this.phone = v.getString("Enter phone: ", "\\d{10,}");
+        this.address = v.getString("Enter address: ", "^[a-zA-Z ]+$");
+        this.phone = v.getString("Enter phone: ", "^[0-9]{10,}$");
         this.email = v.getString("Enter email: ", "^[a-zA-Z]\\w+@(\\w+\\.)+\\w+$");  //lehon_123313gquan@gmail.com.vn.bn.test
 
     }
-
+    
 }

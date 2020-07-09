@@ -1,28 +1,16 @@
 
-
 import java.util.List;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author ThinkPro
- */
-public class Intern extends Candidate {
 
-    private String major;
+public class Intern extends Candidate{
+     private String major;
     private int semester;
     private String university;
 
     public Intern() {
     }
 
-    public Intern(int id, String firsName, String lastName, int birthDate,
-            String address, String phone, String email, int type, String major, int semester, String university) {
-
+    public Intern(String major, int semester, String university, int id, String firsName, String lastName, int birthDate, String address, String phone, String email, int type) {
         super(id, firsName, lastName, birthDate, address, phone, email, type);
         this.major = major;
         this.semester = semester;
@@ -52,7 +40,6 @@ public class Intern extends Candidate {
     public void setUniversity(String university) {
         this.university = university;
     }
-
     @Override
     public void create(List<Candidate> list) {
         Validate v = new Validate();
@@ -60,7 +47,7 @@ public class Intern extends Candidate {
         this.major = v.getString("Enter education: ", "[a-zA-Z ]+");
         this.semester = v.getInt("Enter semester: ", "Semester is a positive integer", 1, Integer.MAX_VALUE);
         this.university = v.getString("Enter education: ", "[a-zA-Z ]+");
-        this.type=2;
+        this.setType(2);
     }
-
+    
 }

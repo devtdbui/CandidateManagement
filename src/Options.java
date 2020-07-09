@@ -1,86 +1,86 @@
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author ThinkPro
- */
 public class Options {
+
+    List<Candidate> list;
 
     public Options() {
     }
 
-    public Options(List<Candidate> listCandidates) {
-        this.listCandidates = listCandidates;
-    }
-    List<Candidate> listCandidates;
-    Validate validate = new Validate();
-
-    public void addCandidate(int type) {
-
-        switch (type) {
-            case 0:
-                Experience E = new Experience();
-                E.create(listCandidates);
-                listCandidates.add(E);
-                break;
-            case 1:
-                Fresher f = new Fresher();
-                f.create(listCandidates);
-                listCandidates.add(f);
-                break;
-            case 2:
-                Intern I = new Intern();
-                I.create(listCandidates);
-                listCandidates.add(I);
-                break;
-        }
+    public Options(List<Candidate> list) {
+        this.list = list;
     }
 
-    public void search() {
-        String inputSearch = validate.getString("Input Candidate name (First name or Last name):", "[a-zA-Z ]+");
-        int type = validate.getInt("Input type of candidate: ", "Type [0-2]", 0, 2);
-
-        for (Candidate C : listCandidates) {
-            if (C.getType() == type) {
-                String fullName = C.getFirsName().toLowerCase() + C.getLastName().toLowerCase();
-                if (fullName.contains(inputSearch.toLowerCase())) {
-                    System.out.println(C);
-                }
-            }
-        }
-
-    }
-
-    public void displayAll() {
-        System.out.println("List of candidate:");
-        Collections.sort(listCandidates, new Comparator<Candidate>() {
+    public void display() {
+        //ctrl + space
+        Collections.sort(list, new Comparator<Candidate>() {
             @Override
             public int compare(Candidate o1, Candidate o2) {
                 return o1.getType() - o2.getType();
             }
         });
         System.out.println("===========EXPERIENCE CANDIDATE============");
-        int instance = 0;
-        for (Candidate C : listCandidates) {
-            if (C.getType() == 1 && instance == 0) {
+        int i = 0;
+        for (Candidate o : list) {
+            if (o.getType() == 1 && i == 0) {
                 System.out.println("==========FRESHER CANDIDATE==============");
-                instance = 1;
+                i++;
             }
-            if (C.getType() == 2 && instance == 1) {
-                System.out.println("==========INTERN CANDIDATE==============");
-                instance = 2;
+            if (o.getType() == 2 && i == 1) {
+                System.out.println("==========FRESHER CANDIDATE==============");
+                i++;
             }
-            System.out.println(C.getFirsName() + " " + C.getLastName());
+            System.out.println(o.getFirsName() + " " + o.getLastName());
         }
     }
+
+    public void search(String searchName, int type) {
+        boolean check = false;
+        for (Candidate o : list) {
+            String fullName = o.getFirsName().toLowerCase() + " " + o.getLastName().toLowerCase();
+            if (fullName.contains(searchName.toLowerCase()) && o.getType() == type) {
+                if (check == false) {
+                    System.out.println("The candidates found: ");
+                    check = true;
+                }
+                System.out.println(o);
+            }
+        }
+        if (check == false) {
+            System.out.println("not found");
+        }
+
+    }
+
+    public void add(int type) {
+        Validate v = new Validate();
+        do{
+            switch(type){
+                case 0:
+                    Experience e = new Experience();
+                    e.create(list);
+                    list.add(e);
+                    break;
+                case 1:
+                    Fresher f = new Fresher();
+                    f.create(list);
+                    list.add(f);
+                    break;
+                case 2:
+                    Intern i = new Intern();
+                    i.create(list);
+                    list.add(i);
+                    break;
+            }
+            if(!v.checkYesNo()){
+                display();
+                break;
+            }
+        }while(true);
+    }
+   
 
 }
