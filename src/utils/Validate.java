@@ -1,6 +1,9 @@
+package utils;
 
-import java.util.Scanner;
-import java.util.regex.Pattern;
+import candidate.CandidateManagement;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -9,34 +12,25 @@ import java.util.regex.Pattern;
  */
 /**
  *
- * @author alias
+ * @author ThinkPro
  */
 public class Validate {
 
-    Scanner sc = new Scanner(System.in);
+    static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-    public void menu() {
-        System.out.println("CANDIDATE MANAGEMENT SYSTEM");
-        System.out.println("1.	Experience");
-        System.out.println("2.	Fresher");
-        System.out.println("3.	Internship");
-        System.out.println("4.	Searching");
-        System.out.println("5.	Exit");
-    }
-
-    public int getInt(String msg, String err, int min, int max) {
+    public static int getInt(String msg, String err, int min, int max) {
         int a = 0;
         boolean check;
         do {
             check = true;
             try {
                 System.out.print(msg);
-                a = Integer.parseInt(sc.nextLine());
+                a = Integer.parseInt(in.readLine());
                 if (a < min || a > max) {
                     System.out.println(err);
                     check = false;
                 }
-            } catch (Exception e) {
+            } catch (IOException | NumberFormatException e) {
                 System.out.println(err);
                 check = false;
             }
@@ -44,31 +38,33 @@ public class Validate {
         return a;
     }
 
-    public String getString(String msg, String pattern) {
+    public static String getString(String msg, String pattern) {
         String value;
         do {
             try {
-                System.out.print(msg);
-                value = sc.nextLine();
-                Pattern p = Pattern.compile(pattern);
-                if (p.matcher(value).find()) {
+                System.out.println(msg);
+                value = in.readLine();
+                if (value.matches(pattern)) {
                     break;
                 }
-            } catch (Exception ex) {
+            } catch (IOException ex) {
+                ex.printStackTrace(System.out);
             }
 
         } while (true);
         return value;
     }
 
-    public boolean checkYesNo() {
+    public static void checkYesNo(CandidateManagement m, int type) {
         String c = getString("Do you want to continue (Y/N)?", "[yYNn]");
         while (true) {
             if (c.equalsIgnoreCase("y")) {
-                return true;
+                m.addCandidate(type);
             } else {
-                return false;
+                m.displayAll();
+                break;
             }
         }
+
     }
 }

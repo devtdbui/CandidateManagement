@@ -1,4 +1,7 @@
+package entity;
 
+
+import utils.Validate;
 import java.util.List;
 
 /*
@@ -9,9 +12,10 @@ import java.util.List;
 
 /**
  *
- * @author alias
+ * @author ThinkPro
  */
-public class Fresher extends Candidate{
+public class Fresher extends Candidate {
+
     private int graduationDate;
     private String graduationRank;
     private String education;
@@ -19,7 +23,10 @@ public class Fresher extends Candidate{
     public Fresher() {
     }
 
-    public Fresher(int graduationDate, String graduationRank, String education, int id, String firsName, String lastName, int birthDate, String address, String phone, String email, int type) {
+    public Fresher(int id, String firsName, String lastName, int birthDate,
+            String address, String phone, String email, int type,
+            int graduationDate, String graduationRank, String education) {
+
         super(id, firsName, lastName, birthDate, address, phone, email, type);
         this.graduationDate = graduationDate;
         this.graduationRank = graduationRank;
@@ -49,18 +56,18 @@ public class Fresher extends Candidate{
     public void setEducation(String education) {
         this.education = education;
     }
+
     @Override
     public void create(List<Candidate> list) {
-        Validate v = new Validate();
         super.create(list);
-        this.graduationDate = v.getInt("Enter Graduation Time: ", "Graduation Time invalid", 1900, 2020);
+        this.graduationDate = Validate.getInt("Enter Graduation Time: ", "Graduation Time invalid", 1900, 2020);
 
         String rank;
         do {
-            rank = v.getString("Enter Rank of Graduation: ", "[a-zA-Z]+");
+            rank = Validate.getString("Enter Rank of Graduation: ", "[a-zA-Z]+");
         } while (!rank.equals("Excellence") && !rank.equals("Good") && !rank.equals("Fair") && !rank.equals("Poor"));
         this.graduationRank=rank;
-        this.education = v.getString("Enter education: ", "[a-zA-Z ]+");
-        this.setType(1);
+        this.education = Validate.getString("Enter education: ", "[a-zA-Z ]+");
     }
+
 }
